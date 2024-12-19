@@ -19,7 +19,7 @@ func formatAuthor(author string) string {
 	for _, part := range parts[:len(parts)-1] {
 		initials += string(part[0]) + ". "
 	}
-	return fmt.Sprintf("%s, %s", lastName, initials)
+	return fmt.Sprintf("%s, %s", lastName, strings.TrimSpace(initials))
 }
 
 func parseDate(date string) string {
