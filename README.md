@@ -26,3 +26,9 @@ or run it directly without build
 ```
 go run . <url>
 ```
+
+### Example
+```bash
+./metacite https://medium.com/@radityanalaa/realtime-chat-website-menggunakan-typescript-expressjs-dan-socketio-a949072a7b32
+```
+Nala, Y. R. (3 August 2024). Realtime Chat Website Menggunakan Typescript, ExpressJs, dan SocketIO. _Medium_. https://medium.com/@radityanalaa/realtime-chat-website-menggunakan-typescript-expressjs-dan-socketio-a949072a7b32
