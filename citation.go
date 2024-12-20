@@ -36,5 +36,10 @@ func generateAPACitation(metadata Metadata) string {
 	if formattedDate == "" {
 		formattedDate = "n.d."
 	}
+
+	if formattedAuthor == "No Author" {
+		return fmt.Sprintf("%s. (%s). %s. %s", metadata.SiteName, formattedDate, italic(metadata.Title), metadata.CanonicalURL)
+	}
+
 	return fmt.Sprintf("%s (%s). %s. %s. %s", formattedAuthor, formattedDate, metadata.Title, italic(metadata.SiteName), metadata.CanonicalURL)
 }
