@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -9,12 +10,28 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		fmt.Println("Usage: metacite <url>")
-		os.Exit(1)
+	urlFlag := flag.String("l", "", "The target URL")
+	modeFlag := flag.String("m", "apa", "The mode to use (default, other modes)")
+	flag.Parse()
+
+	supportedModes := map[string]bool{
+		"apa": true,
 	}
 
-	targetURL := os.Args[1]
+	if _, ok := supportedModes[*modeFlag]; !ok {
+		fmt.Println("Error: Unsupported mode. Supported modes are:")
+		for mode := range supportedModes {
+			fmt.Println("  -", mode)
+			os.Exit(1)
+		}
+	}
+
+	if *urlFlag == "" {
+		fmt.Println("Error: URL is required. Use -l <url>")
+		os.Exit(1)
+	}
+	targetURL := *urlFlag
+
 	htmlContent, err := fetchPage(targetURL)
 	if err != nil {
 		fmt.Println("Error fetching page:", err)
@@ -28,6 +45,11 @@ func main() {
 	}
 
 	metadata := extractMetadata(doc, targetURL)
-	citation := generateAPACitation(metadata)
+
+	var citation string
+	if *modeFlag == "apa" {
+		citation = generateAPACitation(metadata)
+	}
+
 	fmt.Println(citation)
 }
