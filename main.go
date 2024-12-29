@@ -13,14 +13,25 @@ const citationFile = "citation.json"
 
 func main() {
 	urlFlag := flag.String("l", "", "The target URL")
-	modeFlag := flag.String("m", "apa", "The mode to use (default, other modes)")
-	actionFlag := flag.String("a", "add", "Action: add, show")
+	modeFlag := flag.String("m", "apa", "Mode: apa (default)")
+	actionFlag := flag.String("a", "add", "Action: add (default), show, direct (get citation directly without saving)")
 	flag.Parse()
 
 	if *actionFlag == "show" {
 		citations := loadCitations("citation.json")
 		sortCitations(citations)
 		showCitations(citations, *modeFlag)
+		return
+	}
+
+	if *urlFlag == "" {
+		fmt.Println("Error: URL is required. Use -l <url>")
+		os.Exit(1)
+	}
+	targetURL := *urlFlag
+
+	if *actionFlag == "del" {
+		removeCitation("citation.json", targetURL)
 		return
 	}
 
@@ -39,6 +50,7 @@ func main() {
 	supportedActions := map[string]bool{
 		"show":   true,
 		"add":    true,
+		"del":    true,
 		"direct": true,
 	}
 
@@ -49,12 +61,6 @@ func main() {
 			os.Exit(1)
 		}
 	}
-
-	if *urlFlag == "" {
-		fmt.Println("Error: URL is required. Use -l <url>")
-		os.Exit(1)
-	}
-	targetURL := *urlFlag
 
 	htmlContent, err := fetchPage(targetURL)
 	if err != nil {
