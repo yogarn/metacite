@@ -1,5 +1,5 @@
 # metacite
-> A simple tool that takes a URL and generates an APA citation. No need to dig through metadata or format anything manually — just give it the URL, and you're good to go.
+> A simple tool that takes an URL and generates an APA citation. No need to dig through metadata or format anything manually — just give it the URL, and you're good to go.
 
 ---
 
